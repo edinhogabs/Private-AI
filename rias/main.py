@@ -1,4 +1,5 @@
 from services.sistema_login import SistemaLogin
+from services.rias import RIAS
 
 
 def main():
@@ -18,9 +19,10 @@ def main():
 
             elif opcao == 2:
                 usuario = sistema_login.autenticar()
-                if usuario:
-                    print(usuario.apresentar())
-                    #print(usuario.mostrar_dados())
+
+                if usuario is not None:
+                    assistente = RIAS(usuario, sistema_login)
+                    assistente.iniciar()
 
             elif opcao == 3:
                 print("Encerrando sistema...")

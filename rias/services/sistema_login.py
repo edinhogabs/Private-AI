@@ -41,3 +41,33 @@ class SistemaLogin:
         else:
             print("\nLogin ou senha inválidos.\n")
             return None
+        
+        
+    def alterar_senha(self, usuario):
+        print("\n=== ALTERAÇÃO DE SENHA ===")
+        senha_atual = input("Digite sua senha atual: ").strip()
+
+        if senha_atual != usuario.senha:
+            print("Senha atual incorreta.")
+            return False
+
+        nova_senha = input("Digite a nova senha: ").strip()
+        confirmar_senha = input("Confirme a nova senha: ").strip()
+
+        if nova_senha != confirmar_senha:
+            print("As senhas não coincidem.")
+            return False
+
+        if len(nova_senha) < 4:
+            print("A nova senha deve ter pelo menos 4 caracteres.")
+            return False
+
+        sucesso = self.banco.atualizar_senha(usuario.login, nova_senha)
+
+        if sucesso:
+            usuario.senha = nova_senha
+            print("Senha alterada com sucesso!")
+            return True
+
+        print("Não foi possível alterar a senha.")
+        return False
